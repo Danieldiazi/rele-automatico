@@ -1,0 +1,155 @@
+substitutions:
+  name: "rele-automatico"
+  friendly_name: "Relé Automatico"
+
+esphome:
+  name: "${name}"
+  # Friendly names are used where appropriate in Home Assistant
+  friendly_name: "${friendly_name}"
+  # Automatically add the mac address to the name
+  # so you can use a single firmware for all devices
+  name_add_mac_suffix: true
+
+  # This will allow for (future) project identification,
+  # configuration and updates.
+  project:
+    name: danieldiazi.rele-automatico
+    version: "0.1"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# To be able to get logs from the device via serial and api.
+logger:
+
+# API is a requirement of the dashboard import.
+api:
+
+# OTA is required for Over-the-Air updating
+ota:
+
+
+wifi:
+  # Set up a wifi access point using the device name above
+  ap:
+    password: "P1234567"
+
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device.
+captive_portal:
+
+# Sets up Bluetooth LE (Only on ESP32) to allow the user
+# to provision wifi credentials to the device.
+esp32_improv:
+  authorizer: none
+
+# Sets up the improv via serial client for Wi-Fi provisioning.
+# Handy if your device has a usb port for the user to add credentials when they first get it.
+improv_serial:
+
+
+# This should point to the public location of this yaml file.
+dashboard_import:
+  package_import_url: github://Danieldiazi/rele-automatico/rele-automatico.yaml@main
+
+number:
+  - platform: template
+    id: selector_temperatura_encendido
+    name: "Encendido auto"
+    icon: "mdi:temperature"
+    update_interval: 5s
+    initial_value: 80
+    restore_value: yes
+    step: 1
+    min_value: 10
+    max_value: 80
+    mode: slider
+    optimistic: True #al cambiar el valor que lo aplique.
+    
+
+
+  - platform: template
+    id: selector_temperatura_apagado
+    name: "Apagado auto"
+    icon: "mdi:temperature"
+    update_interval: 5s
+    initial_value: 0
+    restore_value: yes
+    step: 1
+    min_value: 10
+    max_value: 80
+    mode: slider
+    optimistic: True #al cambiar el valor que lo aplique.
+    
+
+switch:
+  - platform: gpio
+    id: rele
+    name: "Relé"
+    pin: 5
+    on_turn_on:
+    - logger.log: "Relé encendido"
+    on_turn_off:
+    - logger.log: "Relé apagado"
+
+
+  - platform: restart
+    name: Reiniciar   
+  
+  - platform: template
+    id: modo_automatico
+    name: "Modo automático"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    
+    
+
+sensor:
+  - platform: dht
+    pin: 14
+    temperature:
+      name: "Temperatura"
+      on_value_range:
+      - below: !lambda 'return id(selector_temperatura_apagado).state;' 
+        then:
+          if:
+            condition:
+                      switch.is_on: modo_automatico
+            then:
+                - switch.turn_off: rele
+                - logger.log: "Modo automático: Relé apagado por sensor de temperatura interno"
+            else:
+                - logger.log: "Modo automatico desactivado y el relé no se ha apagado por sensor de temperatura interno"
+      - above: !lambda 'return id(selector_temperatura_encendido).state;' 
+        then:
+           if:
+            condition:
+                      switch.is_on: modo_automatico
+            then:
+                - switch.turn_on: rele
+                - logger.log: "Modo automático: Relé encendido por sensor de temperatura interno"
+            else:
+                - logger.log: "Modo automatico desactivado y el relé no se ha apagado por sensor de temperatura interno"
+          
+          
+    humidity:
+      name: "Humedad"
+    update_interval: 60s  
+        
+
+
+  - platform: uptime
+    name: Tiempo encendido
+  - platform: wifi_signal
+    name: Señal WiFi
+    update_interval: 60s
+
+
+
+web_server:
+  port: 80
