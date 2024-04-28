@@ -11,6 +11,7 @@ jobs:
       matrix:
         file:
           - rele-automatico.yaml
+          - minimal.yaml
           
     steps:
       - name: Checkout source code
