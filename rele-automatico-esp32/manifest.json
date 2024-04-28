@@ -1,0 +1,9 @@
+{
+  "chipFamily": "ESP32",
+  "parts": [
+    {
+      "path": "rele-automatico-esp32/rele-automatico-esp32.bin",
+      "offset": 0
+    }
+  ]
+}
