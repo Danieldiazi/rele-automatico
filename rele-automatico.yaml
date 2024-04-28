@@ -1,6 +1,8 @@
 substitutions:
   name: "rele-automatico"
   friendly_name: "Relé Automatico"
+  # Icon
+  main_icon: "lightning-bolt"
 
 esphome:
   name: "${name}"
@@ -35,6 +37,7 @@ ota:
 wifi:
   # Set up a wifi access point using the device name above
   ap:
+    ssid: "${friendly_name}"
     password: "P1234567"
     
 # In combination with the `ap` this allows the user
