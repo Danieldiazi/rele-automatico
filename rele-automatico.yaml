@@ -113,6 +113,7 @@ switch:
 sensor:
   - platform: dht
     pin: 14
+    model: DHT22 #Si no pongo el modelo me da valores negativos.
     temperature:
       name: "Temperatura"
       on_value_range:
@@ -140,6 +141,7 @@ sensor:
           
     humidity:
       name: "Humedad"
+      accuracy_decimals: 1 #como la plataforma soporta dht11 y no tiene precisión a nivel de decimal, por defecto está a 0. Solo en el caso de humedad.
     update_interval: 60s  
         
 
