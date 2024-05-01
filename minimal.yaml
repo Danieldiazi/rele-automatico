@@ -14,7 +14,7 @@ esphome:
   # configuration and updates.
   project:
     name: danieldiazi.rele-automatico
-    version: "0.1"
+    version: "0.12"
 
 esp32:
   board: esp32dev
@@ -34,6 +34,7 @@ ota:
 wifi:
   # Set up a wifi access point using the device name above
   ap:
+    ssid: "${friendly_name}"
     password: "P1234567"
 
 # In combination with the `ap` this allows the user
