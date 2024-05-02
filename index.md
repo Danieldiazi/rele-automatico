@@ -1,6 +1,6 @@
-# About
+# Acerca de Relé automático
 
-Add some information about your project here.
+Este proyecto crea un relé automático
 
 # Installation
 
