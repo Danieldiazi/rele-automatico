@@ -14,7 +14,7 @@ esphome:
   # configuration and updates.
   project:
     name: danieldiazi.rele-automatico
-    version: "0.12"
+    version: "0.15"
 
 esp32:
   board: esp32dev
