@@ -6,9 +6,13 @@
   "builds": [
     {
       "chipFamily": "ESP32",
+      "ota": {
+        "path": "rele-automatico-esp32/rele-automatico-esp32.ota.bin",
+        "md5": "20c959d5927c46c60633c935662faed0"
+      },
       "parts": [
         {
-          "path": "rele-automatico-esp32/rele-automatico-esp32.bin",
+          "path": "rele-automatico-esp32/rele-automatico-esp32.factory.bin",
           "offset": 0
         }
       ]
