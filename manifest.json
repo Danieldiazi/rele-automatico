@@ -8,7 +8,7 @@
       "chipFamily": "ESP32",
       "ota": {
         "path": "rele-automatico-esp32/rele-automatico-esp32.ota.bin",
-        "md5": "20c959d5927c46c60633c935662faed0"
+        "md5": "b7399c1979337073ee0f01f5e9b0b851"
       },
       "parts": [
         {
