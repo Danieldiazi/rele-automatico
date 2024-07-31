@@ -1,6 +1,6 @@
 # Relé automático
 
-This repo serves as a template for creating a new ESPHome project.
+ESte proyecto está en pruebas
 
 It includes a GitHub workflow that will automatically build the configuration(s) and then deploys a simple 
 website via GitHub pages that utilises [ESP Web Tools](https://esphome.github.io/esp-web-tools/) for users to 
